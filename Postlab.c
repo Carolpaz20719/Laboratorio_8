@@ -41,7 +41,7 @@ void mostrar_valor (void);
 /*------------------------------------------------------------------------------
  * VARIABLES 
  ------------------------------------------------------------------------------*/
-uint16_t  valor;     // valor para obtener centenas/decenas/unidades
+uint16_t valor;     // valor para obtener centenas/decenas/unidades
 uint8_t w;           // variable para tabla
 uint8_t banderas=0;  // banderas para el multiplexado
 uint8_t num[3];      // guardar centenas/decenas/unidades
@@ -63,8 +63,8 @@ uint8_t tabla[10]= {0b00111111,  //0
 void __interrupt() isr (void){
     
     if(PIR1bits.ADIF){             // Fue interrupción del ADC
-        if(ADCON0bits.CHS == 2)    // Verificamos sea AN5 el canal seleccionado
-            PORTB = ADRESH;         // Mostramos ADRESH en PORTC
+        if(ADCON0bits.CHS == 2)    // Verificamos sea AN2 el canal seleccionado
+            PORTB = ADRESH;         // Mostramos ADRESH en PORTB
         else 
             valor = (ADRESH*100/51);   // Conversión del ADRESH a 0-500 
         PIR1bits.ADIF = 0;          // Limpiamos bandera de interrupción 
@@ -88,13 +88,13 @@ void main(void) {
         obtener_num();      // llamar a obtener_num
         set_display();      // llamar a set_display
         
-        if(ADCON0bits.GO == 0){                // Revisar  
+        if(ADCON0bits.GO == 0){           // Revisar  
             if(ADCON0bits.CHS == 2)       // si el canal es 2
                 ADCON0bits.CHS = 1;       // Cambio de canal al 1
             
             else 
-                ADCON0bits.CHS = 2;       // Cambio de canal al 6
-            __delay_us(50);                    // Tiempo de adquisición
+                ADCON0bits.CHS = 2;       // Cambio de canal al 2
+            __delay_us(50);               // Tiempo de adquisición
             
             ADCON0bits.GO = 1;                 // Iniciamos proceso de conversión
         }
@@ -160,7 +160,7 @@ void setup(void){
     ANSELH = 0;                 // Usaremos I/O digitales
     
     TRISA = 0b0110;             // PORTA como entrada
-    PORTA = 0x00;               // Limpiamos a PORTE
+    PORTA = 0x00;               // Limpiamos a PORTA
     
     TRISB = 0x00;               // PORTC como salida
     PORTB = 0x00;               // Limpiamos PORTB 
