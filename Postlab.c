@@ -162,7 +162,7 @@ void setup(void){
     TRISA = 0b0110;             // PORTA como entrada
     PORTA = 0x00;               // Limpiamos a PORTA
     
-    TRISB = 0x00;               // PORTC como salida
+    TRISB = 0x00;               // PORTB como salida
     PORTB = 0x00;               // Limpiamos PORTB 
     TRISC = 0x00;               // PORTC como salida
     PORTC = 0x00;               // Limpiamos PORTC 
